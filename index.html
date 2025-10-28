@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 2: Design Your Independent Study | AI + Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --teal: #3bc4b2;
+            --purple: #9c72fb;
+            --dark: #1e1e1e;
+            --gray: #666;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background: var(--white);
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--teal), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--teal);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(59, 196, 178, 0.1), rgba(156, 114, 251, 0.1));
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--teal), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TL;DR Box */
+        .tldr {
+            background: linear-gradient(135deg, rgba(59, 196, 178, 0.1), rgba(156, 114, 251, 0.1));
+            border-left: 4px solid var(--teal);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+
+        .tldr h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .tldr p {
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .tldr ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tldr li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--gray);
+        }
+
+        .tldr li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--teal);
+            font-weight: bold;
+        }
+
+        /* Content */
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            color: var(--dark);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: var(--dark);
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--dark);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--gray);
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        .card ul {
+            margin-left: 1.2rem;
+        }
+
+        /* Timeline Table */
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-table th {
+            background: linear-gradient(135deg, var(--teal), var(--purple));
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .timeline-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            color: var(--gray);
+        }
+
+        .timeline-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .timeline-table tr:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, var(--teal), var(--purple));
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 196, 178, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: #999;
+        }
+
+        /* Mobile Nav */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-table {
+                font-size: 0.9rem;
+            }
+
+            .timeline-table th,
+            .timeline-table td {
+                padding: 0.75rem;
+            }
+        }
+
+        /* Highlight boxes */
+        .highlight {
+            background: var(--light-gray);
+            border-left: 4px solid var(--purple);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .highlight p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">PROJECT 2: DESIGN YOUR INDEPENDENT STUDY</div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showSection('overview')">Overview</a></li>
+                <li><a onclick="showSection('explore')">What to Explore</a></li>
+                <li><a onclick="showSection('planning')">Planning</a></li>
+                <li><a onclick="showSection('checkpoints')">Checkpoints</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Design Your Independent Study</h1>
+            <p>Design a 7-week independent study exploring ANY AI + Design topic you want. Use AI as your planning partner.</p>
+            <div class="hero-meta">
+                <span>📅 <strong>2 Weeks</strong> Planning (Weeks 4-5)</span>
+                <span>⚡ <strong>6 Weeks</strong> Execution (Weeks 6-11)</span>
+                <span>🎯 <strong>Portfolio-Worthy</strong> Final Project</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="container">
+
+        <!-- OVERVIEW SECTION -->
+        <div id="overview" class="section active">
+            <div class="tldr">
+                <h2>TL;DR</h2>
+                <p><strong>What:</strong> Design a 7-week independent study exploring ANY AI + Design topic you want.</p>
+                <p><strong>This assignment (Weeks 4-5):</strong> Create the plan using AI as your collaborator. Use AI however works for you—no prescribed methods.</p>
+                <p><strong>Next (Weeks 6-11):</strong> Execute your plan. Make stuff. Research. Create.</p>
+                <p><strong>Deliverable for planning phase:</strong> Milanote board with complete plan (7-week study breakdown, research paper plan with 12-18 sources, documentation strategy, final deliverable vision)</p>
+                <p><strong>The point:</strong> Design your own learning journey. Practice professional autonomy. Use AI as a creative partner.</p>
+            </div>
+
+            <h2>Your Self-Directed Journey</h2>
+            <p>You've defined your personal design focus in Project 1. Now it's time to design your own learning journey.</p>
+            <p><strong>This is not a predetermined assignment.</strong> You decide:</p>
+            <ul>
+                <li>What you'll explore and create</li>
+                <li>Which tools you'll use</li>
+                <li>How deep you'll go</li>
+                <li>What your final outcome will be</li>
+            </ul>
+            <p><strong>Your job this week:</strong> Use AI to help you design a meaningful, achievable 7-week plan.</p>
+            <p><strong>Next 6 weeks:</strong> Execute what you designed.</p>
+
+            <h3>What You'll Create (Weeks 4-5 Planning Phase)</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>1. Seven-Week Study Plan</h4>
+                    <p>Design your Weeks 6-11 learning journey. For each week, define:</p>
+                    <ul>
+                        <li>What you'll explore/create</li>
+                        <li>Tools you'll use</li>
+                        <li>How you'll document</li>
+                        <li>Progress indicators</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>2. Research Paper Plan</h4>
+                    <p>Design a research paper alongside your creative work:</p>
+                    <ul>
+                        <li>Research topic/question</li>
+                        <li>12-18 sources (readings, videos, podcasts)</li>
+                        <li>Week-by-week reading schedule</li>
+                        <li>Strategy for developing with AI</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>3. Documentation Strategy</h4>
+                    <p>How you'll track progress over 6 weeks:</p>
+                    <ul>
+                        <li>Visual note-taking approach</li>
+                        <li>Milanote organization</li>
+                        <li>Reading response format</li>
+                        <li>Process documentation</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>4. Final Deliverable Vision</h4>
+                    <p>What you'll create by Week 11:</p>
+                    <ul>
+                        <li>Portfolio website (most common)</li>
+                        <li>Research paper + visual portfolio</li>
+                        <li>Custom tool/prototype</li>
+                        <li>Creative artifact + documentation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>How to Use AI in Planning</h3>
+            <p><strong>There's no prescribed method.</strong> Use AI however makes sense to you:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Conversational Approach</h4>
+                    <p>Open a conversation with Claude, ChatGPT, or Gemini and let it evolve naturally. Ask follow-up questions. Push back when suggestions don't fit.</p>
+                </div>
+                <div class="card">
+                    <h4>Structured Brainstorming</h4>
+                    <p>Ask AI to generate possibilities, suggest tools, identify readings, and reality-check your timeline.</p>
+                </div>
+                <div class="card">
+                    <h4>Iterative Refinement</h4>
+                    <p>Draft your plan, ask AI to critique it, revise based on feedback, and repeat until it feels right.</p>
+                </div>
+                <div class="card">
+                    <h4>Multi-Model Comparison</h4>
+                    <p>Ask the same planning question to multiple models, compare suggestions, and synthesize the best ideas.</p>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <p><strong>What matters:</strong> The quality of your plan, not the method you used to create it.</p>
+                <p><strong>Document your process:</strong> Include notes about how AI helped in your reflection.</p>
+            </div>
+        </div>
+
+        <!-- WHAT TO EXPLORE SECTION -->
+        <div id="explore" class="section">
+            <div class="tldr">
+                <h2>TL;DR</h2>
+                <p>You can explore <strong>ANY AI + Design direction</strong> including image generation, video, custom GPTs, agents, web development, no-code tools, writing systems, or emerging tools.</p>
+                <p><strong>Key question:</strong> What do you want to explore deeply enough to spend 7 weeks on it?</p>
+                <p><strong>Balance:</strong> Narrow enough to go deep, broad enough to sustain 7 weeks, ambitious but achievable.</p>
+            </div>
+
+            <h2>What Can You Explore?</h2>
+            <p>Choose your own adventure in AI + Design:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🎨 Image & Visual Media</h3>
+                    <ul>
+                        <li>Advanced image generation workflows</li>
+                        <li>Style transfer and artistic exploration</li>
+                        <li>Brand identity systems with AI</li>
+                        <li>Editorial illustration pipelines</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🎬 Video & Motion</h3>
+                    <ul>
+                        <li>AI video generation (Runway, Pika, Luma)</li>
+                        <li>Motion graphics with AI assistance</li>
+                        <li>Animated storytelling</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🤖 Custom AI Tools</h3>
+                    <ul>
+                        <li>Custom GPTs or Custom Gems</li>
+                        <li>Claude Projects or Skills</li>
+                        <li>AI-powered design assistants</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>⚙️ Agents & Automation</h3>
+                    <ul>
+                        <li>Multi-agent systems</li>
+                        <li>Automated design pipelines</li>
+                        <li>Research and synthesis agents</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>💻 Web Development</h3>
+                    <ul>
+                        <li>Vibe coding and AI-assisted development</li>
+                        <li>No-code tools (Framer, Webflow, Softr)</li>
+                        <li>Portfolio sites and web experiences</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>✍️ Writing & Research</h3>
+                    <ul>
+                        <li>AI-assisted design research</li>
+                        <li>Content generation systems</li>
+                        <li>Critical analysis of AI in design</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🎭 Multi-Modal Experiences</h3>
+                    <ul>
+                        <li>Combining text, image, video, interaction</li>
+                        <li>Cross-platform AI experiences</li>
+                        <li>Experimental design tools</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🚀 Your Own Idea</h3>
+                    <ul>
+                        <li>Emerging tools you're curious about</li>
+                        <li>Experimental workflows</li>
+                        <li>Tool comparisons</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Finding Your Focus</h3>
+            <div class="highlight">
+                <p><strong>Start with genuine curiosity:</strong> What AI + Design topic keeps coming up in your thinking? What do you wish you understood better?</p>
+                <p><strong>Balance ambition with realism:</strong></p>
+                <ul>
+                    <li><strong>Too broad:</strong> "Explore AI and graphic design" → What aspect? What specific question?</li>
+                    <li><strong>Too narrow:</strong> "Create 5 logos" → Where's the research? What's the intellectual challenge?</li>
+                    <li><strong>Just right:</strong> "Create a brand identity using AI while researching industry perspectives on AI-assisted design."</li>
+                </ul>
+            </div>
+
+            <h4>The Goldilocks Principle</h4>
+            <ul>
+                <li>Focused enough to go deep</li>
+                <li>Broad enough to sustain 7 weeks</li>
+                <li>Ambitious enough to learn significantly</li>
+                <li>Realistic enough to complete successfully</li>
+            </ul>
+
+            <p style="text-align: center; margin-top: 2rem;"><a href="PLANNING GUIDE.md" class="btn">View Full Planning Guide →</a></p>
+        </div>
+
+        <!-- PLANNING SECTION -->
+        <div id="planning" class="section">
+            <div class="tldr">
+                <h2>TL;DR</h2>
+                <p><strong>Your mission:</strong> Design a 7-week independent study plan using AI as your collaborator.</p>
+                <p><strong>Three-step process:</strong></p>
+                <ul>
+                    <li>Step 1: Design your 7-week study (what you'll explore each week)</li>
+                    <li>Step 2: Build reading list + research paper plan (12-18 sources)</li>
+                    <li>Step 3: Plan documentation & final deliverable</li>
+                </ul>
+                <p><strong>Time estimate:</strong> 12-16 hours spread across 2 weeks</p>
+                <p><strong>Due:</strong> End of Week 5</p>
+            </div>
+
+            <h2>Three-Step Planning Process</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Step 1: Design Your 7-Week Study</h3>
+                    <p>Use AI to map out what you'll explore and create over 6 weeks (Weeks 6-11).</p>
+                    <h4>For each week, define:</h4>
+                    <ul>
+                        <li>Primary goal and specific activities</li>
+                        <li>Tools/techniques you'll use</li>
+                        <li>What you'll create/produce</li>
+                        <li>Success indicators</li>
+                    </ul>
+                    <h4>Week structure:</h4>
+                    <ul>
+                        <li><strong>Week 6:</strong> Getting started, tool exploration</li>
+                        <li><strong>Week 7:</strong> Going deeper, first prototypes</li>
+                        <li><strong>Week 8:</strong> Refinement & iteration</li>
+                        <li><strong>Week 9:</strong> Integration & synthesis</li>
+                        <li><strong>Week 10:</strong> Polishing & expanding</li>
+                        <li><strong>Week 11:</strong> Finalizing & presenting</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Step 2: Build Reading List & Research Paper Plan</h3>
+                    <p>Design the research component running alongside your creative work.</p>
+                    <h4>Research Question:</h4>
+                    <ul>
+                        <li>Specific, explorable, interesting</li>
+                        <li>Connected to design practice</li>
+                    </ul>
+                    <h4>Curate 12-18 Sources:</h4>
+                    <ul>
+                        <li>~40% Academic (journal articles, book chapters)</li>
+                        <li>~40% Practitioner (essays, case studies, tool docs)</li>
+                        <li>~20% Media (podcasts, videos, talks)</li>
+                    </ul>
+                    <h4>Development Strategy:</h4>
+                    <p>How will you develop the 3,000-5,000 word paper with AI? (Canvas, Artifacts, Gemini, etc.)</p>
+                </div>
+
+                <div class="card">
+                    <h3>Step 3: Plan Documentation & Final Deliverable</h3>
+                    <p>Decide how you'll track progress and what you'll create by Week 11.</p>
+                    <h4>Documentation Strategy:</h4>
+                    <ul>
+                        <li>Visual note-taking approach</li>
+                        <li>Milanote organization</li>
+                        <li>Reading response format</li>
+                        <li>Weekly reflection method</li>
+                    </ul>
+                    <h4>Final Deliverable Options:</h4>
+                    <ul>
+                        <li>Portfolio website (most common)</li>
+                        <li>Research paper + visual portfolio</li>
+                        <li>Custom tool/prototype</li>
+                        <li>Creative artifact + documentation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Your Milanote Board Deliverable</h3>
+            <p>Submit a single, well-organized Milanote board containing all six sections:</p>
+            <ol>
+                <li><strong>Design Focus (Brief Recap)</strong> - From Project 1</li>
+                <li><strong>7-Week Study Plan</strong> - Week-by-week breakdown</li>
+                <li><strong>Research Paper Plan</strong> - Question, sources, strategy</li>
+                <li><strong>Documentation Strategy</strong> - How you'll track progress</li>
+                <li><strong>Final Deliverable Vision</strong> - What you'll create</li>
+                <li><strong>Reflection</strong> (200-400 words) - How AI helped, what excites you, anticipated challenges</li>
+            </ol>
+
+            <h3>Assessment (Planning Phase)</h3>
+            <ul>
+                <li><strong>40%</strong> Study Plan Quality (clarity, feasibility, alignment, depth)</li>
+                <li><strong>30%</strong> Research Plan Quality (strong question, quality sources, development strategy)</li>
+                <li><strong>15%</strong> Documentation & Deliverable Planning</li>
+                <li><strong>15%</strong> Reflection & Presentation Quality</li>
+            </ul>
+
+            <p style="text-align: center; margin-top: 2rem;"><a href="PLANNING GUIDE.md" class="btn">View Detailed Planning Guide →</a></p>
+        </div>
+
+        <!-- CHECKPOINTS SECTION -->
+        <div id="checkpoints" class="section">
+            <div class="tldr">
+                <h2>TL;DR</h2>
+                <p><strong>Two checkpoints keep your project on track:</strong></p>
+                <ul>
+                    <li><strong>Week 5:</strong> Submit complete plan for approval (REQUIRED to proceed)</li>
+                    <li><strong>Week 11:</strong> Submit all deliverables + present to class</li>
+                </ul>
+                <p><strong>These are support structures</strong> ensuring you start strong and finish successfully.</p>
+            </div>
+
+            <h2>Checkpoint Overview</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Checkpoint 1: Week 5 Plan Submission</h3>
+                    <p><strong>Due:</strong> End of Week 5</p>
+                    <p><strong>Submit:</strong> Complete Milanote planning board</p>
+                    <h4>Includes:</h4>
+                    <ul>
+                        <li>7-week study plan (Weeks 6-11)</li>
+                        <li>Research paper plan (12-18 sources)</li>
+                        <li>Documentation strategy</li>
+                        <li>Final deliverable vision</li>
+                        <li>Reflection (200-400 words)</li>
+                    </ul>
+                    <p><strong>Approval required:</strong> You cannot begin execution without approval.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Checkpoint 2: Week 11 Final Deliverables</h3>
+                    <p><strong>Due:</strong> End of Week 11</p>
+                    <h4>Submit:</h4>
+                    <ul>
+                        <li>Final research paper (3,000-5,000 words)</li>
+                        <li>Final creative artifact/portfolio</li>
+                        <li>Complete Milanote (all 8 weeks)</li>
+                        <li>Self-evaluation essay (500-750 words)</li>
+                        <li>10-minute presentation to class</li>
+                    </ul>
+                    <p><strong>Assessment:</strong> 30% Process, 35% Execution, 35% Self-Evaluation</p>
+                </div>
+            </div>
+
+            <h3>Timeline at a Glance</h3>
+            <table class="timeline-table">
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Weeks</th>
+                        <th>What You Do</th>
+                        <th>Checkpoint</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Planning</strong></td>
+                        <td>4-5</td>
+                        <td>Design your 7-week study plan with AI help</td>
+                        <td>Submit plan for approval</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Execution</strong></td>
+                        <td>6-11</td>
+                        <td>Execute your plan: make, research, document</td>
+                        <td>Submit final deliverables</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="text-align: center; margin-top: 2rem;"><a href="CHECKPOINT GUIDES.md" class="btn">View Detailed Checkpoint Guides →</a></p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Project 2: Design Your Independent Study</p>
+        <p>Questions? Reach out to Travis or come to office hours.</p>
+    </footer>
+
+    <script>
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('navLinks');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (!nav.contains(event.target) && !btn.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
